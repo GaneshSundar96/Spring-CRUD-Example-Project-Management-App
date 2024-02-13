@@ -1,9 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package' 
+                sh 'docker build . -t spring-boot'
+            }
+        }
+        stage('Run') {
+            steps {
+                sh 'docker run -d -p 8000:8000 --name spring-boot spring-boot'
             }
         }
     }
